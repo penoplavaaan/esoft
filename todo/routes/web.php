@@ -13,12 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('auth/login');
-});
+
 
 Auth::routes();
+
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/home/add', [App\Http\Controllers\HomeController::class, 'add'])->name('add');
+
+Route::get('/add', [App\Http\Controllers\AddTaskController::class, 'create'])->name('addtask');
+
+Route::get('/change_status', [App\Http\Controllers\AddTaskController::class, 'changeStatus'])->name('changeStatus');

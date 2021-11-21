@@ -1,3 +1,6 @@
+<?php
+use App\Models\User;
+?>
 @extends('layouts.app')
 
 @section('content')
@@ -12,13 +15,41 @@
                         @csrf
 
                         <div class="form-group row">
+                            <label for="surname" class="col-md-4 col-form-label text-md-right">{{ __('Surname') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="surname" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') }}" required autocomplete="surname" autofocus>
+
+                                @error('surname')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                                 @error('name')
-                                    <span class="invalid-feedback" role="alert">
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="patronymic" class="col-md-4 col-form-label text-md-right">{{ __('Patronymic') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="patronymic" type="text" class="form-control @error('patronymic') is-invalid @enderror" name="patronymic" value="{{ old('patronymic') }}" autocomplete="patronymic" autofocus>
+
+                                @error('patronymic')
+                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
@@ -43,7 +74,13 @@
                             <label for="supervisor" class="col-md-4 col-form-label text-md-right">{{ __('Supervisor') }}</label>
 
                             <div class="col-md-6">
-                                <input id="supervisor" type="text" class="form-control @error('supervisor') is-invalid @enderror" name="supervisor" value="{{ old('supervisor') }}" required>
+                                <select name="supervisor" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                                    @foreach(User::all() as $user)
+                                        <option value="{{$user->id}}">{{$user->surname}} {{$user->name}} {{$user->patronymic}}</option>
+                                    @endforeach
+
+                                </select>
+
 
                                 @error('supervisor')
                                 <span class="invalid-feedback" role="alert">

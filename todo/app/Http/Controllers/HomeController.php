@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
+use App\Models\User;
+use Auth;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,11 +26,23 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $responsible_task = Task::where(
+            'responsibleID', Auth::user()->id
+        )->get();
+        $creator_tasks = Task::where(
+            'creatorID', Auth::user()->id
+        )->get();
+        $all_tasks = $creator_tasks->merge($responsible_task);
+        return view('home')->with('tasks',$all_tasks);
     }
 
     public function add()
     {
-        return view('add');
+        $subordinates = User::where(
+            'supervisor', Auth::user()->id
+        )->get();
+        return view('add')->with('subordinates',$subordinates);
     }
+
+
 }
