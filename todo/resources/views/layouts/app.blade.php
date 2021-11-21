@@ -17,6 +17,7 @@ use App\Models\User;
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/script.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -73,9 +74,7 @@ use App\Models\User;
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                Здравствуйте, {{ Auth::user()->surname }} {{ Auth::user()->name }} {{ Auth::user()->patronymic }}
-                                !
-
+                                Здравствуйте, <u> {{ Auth::user()->surname }} {{ Auth::user()->name }} {{ Auth::user()->patronymic }}</u>!
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -94,10 +93,8 @@ use App\Models\User;
                                     Ваш ID в системе: {{ Auth::user()->id }}
                                 </div>
 
-                                <a class="dropdown-item red" href="{{ route('logout') }}"
-                                   onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                    {{ __('Выйти из системы') }}
+                                <a class="dropdown-item red" href="{{ route('logout') }}"onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                    Выйти из системы
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -122,8 +119,7 @@ use App\Models\User;
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLabel">Добавить задачу</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <form method="get" action="{{route('addtask')}}">
                                         @csrf

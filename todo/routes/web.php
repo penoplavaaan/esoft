@@ -28,3 +28,5 @@ Route::get('/add', [App\Http\Controllers\AddTaskController::class, 'create'])->n
 Route::get('/change_status', [App\Http\Controllers\AddTaskController::class, 'changeStatus'])->name('changeStatus');
 
 Route::get('/cancel_task', [App\Http\Controllers\AddTaskController::class, 'cancelTask'])->name('cancelTask');
+
+Route::get('/change_task', [App\Http\Controllers\AddTaskController::class, 'changeTask'])->name('cahangeTask');

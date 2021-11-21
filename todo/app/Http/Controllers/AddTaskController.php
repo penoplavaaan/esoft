@@ -48,4 +48,17 @@ class AddTaskController extends Controller
         Task::where('id', $cancel_id)->update(array('status' => "Отменена"));
         return redirect()->route('home');
     }
+
+    protected function changeTask(Request $request)
+    {
+        $change_id = $request["change-id"];
+        Task::where('id', $change_id)->update([
+            'name' => $request['name-change'],
+            'description' => $request['description'],
+            'deadline' => $request['deadline'],
+            'priority' => $request['priority-change'],
+            'responsibleID' => $request['responsibleID'],
+        ]);
+        return redirect()->route('home');
+    }
 }
