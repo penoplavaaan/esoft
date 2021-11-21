@@ -26,3 +26,5 @@ Route::get('/home/add', [App\Http\Controllers\HomeController::class, 'add'])->na
 Route::get('/add', [App\Http\Controllers\AddTaskController::class, 'create'])->name('addtask');
 
 Route::get('/change_status', [App\Http\Controllers\AddTaskController::class, 'changeStatus'])->name('changeStatus');
+
+Route::get('/cancel_task', [App\Http\Controllers\AddTaskController::class, 'cancelTask'])->name('cancelTask');

@@ -35,52 +35,56 @@ use App\Models\User;
                     @endif
                     @if(count($tasks))
                         @foreach($tasks as $task)
+                            @if($task->status !== "Отменена")
+                                    <div class="card">
+                                        <div class="card-header @if($task->status == 'Выполнена') {{'done-task'}} @elseif($task->dedaline < date("Y-n-j")) {{'overdue-task'}} @endif">
+                                            <h4>{{$task->name}}</h4>
+                                            <h5 class="card-text">{{$task->description}}</h5>
+                                        </div>
+                                        <div class="card-body">
 
-                            <div class="card">
-                                <div class="card-header
-                                @if($task->status == 'Выполнена')
-                                    {{'done-task'}}
-                                @endif
-                                ">
+                                            <b>Приоритет:</b>  {{$task->priority}} <br>
+                                            <b>Дедлайн:</b> {{$task->deadline}} <br>
+                                            <b>Ответственный:</b>
+                                            @if($task->responsibleID == Auth::user()->id )
+                                                Я
+                                            @else
+                                                <a href="mailto:{{User::where('id',$task -> responsibleID)->get()->first()->email}}">
+                                                    {{User::where('id',$task -> responsibleID)->get()->first()->surname}}
+                                                    {{User::where('id',$task -> responsibleID)->get()->first()->name}}
+                                                    {{User::where('id',$task -> responsibleID)->get()->first()->patronymic}}
+                                                </a>
 
+                                            @endif
+                                            <br>
+                                            <form id="change-status-form-{{$task->id}}" action="{{ route('changeStatus') }}" method="get"  >
+                                                <b>Статус:</b>
+                                                <select name="status" id="" onchange="document.getElementById('change-status-form-{{$task->id}}').submit();">
+                                                    <option @if($task->status == "К выполнению") selected @endif value="{{$task->id}}_К выполнению">К выполнению</option>
+                                                    <option @if($task->status == "Выполняется") selected @endif value="{{$task->id}}_Выполняется">Выполняется</option>
+                                                    <option @if($task->status == "Выполнена") selected @endif  value="{{$task->id}}_Выполнена">Выполнена</option>
+                                                </select>
+                                                @csrf
+                                            </form>
+                                            <br><br>
 
-                                   <h4>{{$task->name}}</h4>
-                                    <h5 class="card-text">{{$task->description}}</h5>
-                                </div>
-                                <div class="card-body">
+                                            @if($task->creatorID == Auth::user()->id)
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <button type="button" class="btn btn-outline-primary" >Изменить задачу</button>
+                                                    </div>
+                                                    <div class="col">
+                                                        <form id="cancel-task-form" action="{{ route('cancelTask') }}"  >
+                                                            <button class="btn btn-outline-danger" name="cancelId"  value="{{$task->id}}" onclick="document.getElementById('cancel-task-form').submit();">Отменить задачу</button>
+                                                            @csrf
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                            @endif
 
-                                   <b>Приоритет:</b>  {{$task->priority}} <br>
-                                    <b>Дедлайн:</b> {{$task->deadline}} <br>
-                                   <b>Ответственный:</b>
-                                    @if($task->responsibleID == Auth::user()->id )
-                                        Я
-                                    @else
-                                        <a href="mailto:{{User::where('id',$task -> responsibleID)->get()->first()->email}}">
-                                            {{User::where('id',$task -> responsibleID)->get()->first()->surname}}
-                                            {{User::where('id',$task -> responsibleID)->get()->first()->name}}
-                                            {{User::where('id',$task -> responsibleID)->get()->first()->patronymic}}
-                                        </a>
-
-                                    @endif
-                                    <br>
-                                    <form id="change-status-form-{{$task->id}}" action="{{ route('changeStatus') }}" method="get"  >
-                                        <b>Статус:</b>
-                                        <select name="status" id="" onchange="document.getElementById('change-status-form-{{$task->id}}').submit();">
-                                            <option @if($task->status == "К выполнению") selected @endif value="{{$task->id}}_К выполнению">К выполнению</option>
-                                            <option @if($task->status == "Выполняется") selected @endif value="{{$task->id}}_Выполняется">Выполняется</option>
-                                            <option @if($task->status == "Выполнена") selected @endif  value="{{$task->id}}_Выполнена">Выполнена</option>
-                                        </select>
-                                        @csrf
-                                    </form>
-                                    <br><br>
-
-                                    @if($task->creatorID == Auth::user()->id)
-                                        <button type="button" class="btn btn-outline-primary">Изменить задачу</button>
-                                        <button href="#" class="btn btn-outline-danger">Отменить задачу</button>
-                                    @endif
-
-                                </div>
-                            </div>
 
                         @endforeach
                     @else

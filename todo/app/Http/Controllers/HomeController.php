@@ -33,15 +33,17 @@ class HomeController extends Controller
             'creatorID', Auth::user()->id
         )->get();
         $all_tasks = $creator_tasks->merge($responsible_task);
-        return view('home')->with('tasks',$all_tasks);
+
+        $subordinates = User::where(
+            'supervisor', Auth::user()->id
+        )->get();
+        return view('home')->with('tasks',$all_tasks)->with('subordinates',$subordinates);
     }
 
     public function add()
     {
-        $subordinates = User::where(
-            'supervisor', Auth::user()->id
-        )->get();
-        return view('add')->with('subordinates',$subordinates);
+
+
     }
 
 

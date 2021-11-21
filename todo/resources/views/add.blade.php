@@ -12,7 +12,7 @@ use App\Models\User;
                     <div class="card-header">{{ __('Добавить задачу') }}</div>
 
                     <div class="card-body">
-                        <form method="get" action="{{route('addtask'),}}">
+                        <form method="get" action="{{route('addtask')}}">
                             @csrf
 
                             <div class="form-group row">

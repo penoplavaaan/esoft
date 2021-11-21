@@ -9,5 +9,9 @@
 }
 
 .done-task{
-    background-color: #1c7430;
+    background-color: #a1d7b0 !important;
+}
+
+.overdue-task{
+    background-color: #ff4444 !important;
 }
