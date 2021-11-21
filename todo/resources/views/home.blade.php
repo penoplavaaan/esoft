@@ -35,8 +35,15 @@ use App\Models\User;
                     @endif
                     @if(count($tasks))
                         @foreach($tasks as $task)
+
                             <div class="card">
-                                <div class="card-header">
+                                <div class="card-header
+                                @if($task->status == 'Выполнена')
+                                    {{'done-task'}}
+                                @endif
+                                ">
+
+
                                    <h4>{{$task->name}}</h4>
                                     <h5 class="card-text">{{$task->description}}</h5>
                                 </div>
@@ -56,16 +63,22 @@ use App\Models\User;
 
                                     @endif
                                     <br>
-                                    <b>Статус:</b>
-
-                                    <select name="" id="" onchange="">
-                                        <option @if($task->status == "К выполнению") selected @endif value="{{$task->id}}">К выполнению</option>
-                                        <option @if($task->status == "Выполняется") selected @endif value="{{$task->id}}">Выполняется</option>
-                                        <option @if($task->status == "Выполнена") selected @endif  value="{{$task->id}}">Выполнена</option>
-                                        <option @if($task->status == "Отменена") selected @endif value="{{$task->id}}">Отменена</option>
-                                    </select>
+                                    <form id="change-status-form-{{$task->id}}" action="{{ route('changeStatus') }}" method="get"  >
+                                        <b>Статус:</b>
+                                        <select name="status" id="" onchange="document.getElementById('change-status-form-{{$task->id}}').submit();">
+                                            <option @if($task->status == "К выполнению") selected @endif value="{{$task->id}}_К выполнению">К выполнению</option>
+                                            <option @if($task->status == "Выполняется") selected @endif value="{{$task->id}}_Выполняется">Выполняется</option>
+                                            <option @if($task->status == "Выполнена") selected @endif  value="{{$task->id}}_Выполнена">Выполнена</option>
+                                        </select>
+                                        @csrf
+                                    </form>
                                     <br><br>
-                                    <button type="button" class="btn btn-outline-primary">Изменить задачу</button> <button href="#" class="btn btn-outline-danger">Удалить задачу</button>
+
+                                    @if($task->creatorID == Auth::user()->id)
+                                        <button type="button" class="btn btn-outline-primary">Изменить задачу</button>
+                                        <button href="#" class="btn btn-outline-danger">Отменить задачу</button>
+                                    @endif
+
                                 </div>
                             </div>
 

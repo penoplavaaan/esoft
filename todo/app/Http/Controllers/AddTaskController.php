@@ -34,8 +34,11 @@ class AddTaskController extends Controller
 
         return redirect()->route('home');
     }
-    protected function changeStatus()
+    protected function changeStatus(Request $request)
     {
-        Task::where('id', $id)->update(array('image' => 'asdasd'));
+        $task_id = explode('_',$request->status)[0];
+        $new_task_value = explode('_',$request->status)[1];
+        Task::where('id', $task_id)->update(array('status' => $new_task_value));
+        return redirect()->route('home');
     }
 }
