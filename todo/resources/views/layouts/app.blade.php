@@ -110,7 +110,16 @@ use App\Models\User;
                             <!--form id="add-task-form" action="/home/add" method="get" class="d-none"-->
                             </form>
                         </li>
-
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Давайте изменим сортировку!
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="{{route('home')}}">---</a>
+                                <a class="dropdown-item" href="{{route('orderbydate')}}">По дате</a>
+                                <a class="dropdown-item" href="{{route('orderbyresponsible')}}">По ответственным</a>
+                            </div>
+                        </div>
 
                         <!-- Modal -->
                         <div class="modal fade" id="addTask" tabindex="-1" aria-labelledby="exampleModalLabel"

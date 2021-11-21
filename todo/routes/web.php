@@ -17,11 +17,13 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'date'])->name('home');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/home/add', [App\Http\Controllers\HomeController::class, 'add'])->name('add');
+Route::get('/home/date', [App\Http\Controllers\HomeController::class, 'date'])->name('orderbydate');
+
+Route::get('/home/responsible', [App\Http\Controllers\HomeController::class, 'responsible'])->name('orderbyresponsible');
 
 Route::get('/add', [App\Http\Controllers\AddTaskController::class, 'create'])->name('addtask');
 
